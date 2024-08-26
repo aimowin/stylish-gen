@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<title>Stylish Gen</title>
+<meta charset=UTF-8>
+<meta name=viewport content='width=device-width'>
+<style>
+@font-face{font-family:"Architects Daughter";src:url(fonts/architects.ttf);}
+@font-face{font-family:"Montserrat";src:url(fonts/montserrat.ttf);}
+@font-face{font-family:"Poppins";src:url(fonts/poppins.ttf);}
+@font-face{font-family:"Roboto Mono";src:url(fonts/roboto.ttf);}
+@font-face{font-family:"Rubik";src:url(fonts/rubik.ttf);}
+@font-face{font-family:"Secular One";src:url(fonts/secular.ttf);}
+</style>
+<body style='background-color:#e1e1e1; margin:0px; height:100vh; display:flex; align-items:center; justify-content:center;'></body>
+<script src=quotes-pt.json></script>
+<script src=quotes-en.json></script>
+<script>
+lng=false;
+function pickOne(a){return a[parseInt(Math.random()*a.length)];}
+function inicio(){document.body.innerHTML="<div style='background-color:#cccccc; border:1px solid #777777; padding:12px 10px 16px 10px; border-radius:4px; text-align:right;'><textarea style='width:270px; height:80px; padding:12px; margin-bottom:10px; background-color:#ffffff;' id=frase>"+localStorage.getItem("frase-userfrase")+"</textarea><br><a onclick='geraStilo(false,false,false,false);' style='background-color:#b8b8b8; text-decoration:none; border-radius:4px; padding:7px 14px; color:#222222; border:1px solid #555555; cursor:pointer;'>stylize</a></div>";}
+function geraStilo(randomfrase,cor,fonte,frame){
+	if(document.getElementById('frase'))localStorage.setItem("frase-frase",document.getElementById('frase').value);
+	if(document.getElementById('frase'))localStorage.setItem("frase-userfrase",document.getElementById('frase').value);
+	if(randomfrase)
+		if(lng)localStorage.setItem("frase-frase",pickOne(citacoes));
+		else localStorage.setItem("frase-frase",pickOne(quotes));
+
+	if(cor){
+		if(Math.random()>.5){
+			localStorage.setItem("frase-fontcolor",true);
+			localStorage.setItem("frase-bgcolor",hclara[3+parseInt(Math.random()*13)]+hexas[parseInt(Math.random()*16)]+hclara[3+parseInt(Math.random()*13)]+hexas[parseInt(Math.random()*16)]+hclara[3+parseInt(Math.random()*13)]+hexas[parseInt(Math.random()*16)]);
+		}else{
+			localStorage.setItem("frase-fontcolor",false);
+			localStorage.setItem("frase-bgcolor",hescura[parseInt(Math.random()*13)]+hexas[parseInt(Math.random()*16)]+hescura[parseInt(Math.random()*13)]+hexas[parseInt(Math.random()*16)]+hescura[parseInt(Math.random()*13)]+hexas[parseInt(Math.random()*16)]);
+		}
+	}
+
+	if(fonte){
+		localStorage.setItem("frase-font-family",pickOne(["Architects Daughter","Montserrat","Poppins","Roboto Mono","Rubik","Secular One"]));
+		localStorage.setItem("frase-font-size",pickOne([15,18,21,24,27,30,33]));
+		localStorage.setItem("frase-text-align",pickOne(["left","right","center"]));
+		localStorage.setItem("frase-text-transform",pickOne(["lowercase","uppercase","capitalize","none"]));
+	}
+
+	if(frame){
+		localStorage.setItem("frase-border-radius",pickOne([3,6,9,12,15,18]));
+		localStorage.setItem("frase-padding",pickOne([14,18,22,26,30,34,38]));
+		localStorage.setItem("frase-frame-preenchido",Math.random()<.7);
+		localStorage.setItem("frase-tracado-borda",Math.random()<.5);
+		localStorage.setItem("frase-estilo-borda",pickOne(["solid","dashed"]));
+		localStorage.setItem("frase-inclinacao",Math.random()>.8);
+		localStorage.setItem("frase-angulo",pickOne(["346","353","7","14"]));
+		localStorage.setItem("frase-sombra",Math.random()>.8);
+	}
+
+	bgcolor=localStorage.getItem("frase-bgcolor");
+	fontcolor=localStorage.getItem("frase-fontcolor");
+	splash="<div style='padding:0px 34px; width:100vw; height:100vh; background-color:#"+bgcolor+"; display:flex; align-items:center; justify-content:center;'><div style=\"max-width:400px; color:#"+(fontcolor=="true"?"222222":"dddddd")+";";
+	splash+="border-radius:"+localStorage.getItem("frase-border-radius")+"px;";
+	splash+="font-family:'"+localStorage.getItem("frase-font-family")+"';";
+	splash+="font-size:"+localStorage.getItem("frase-font-size")+"px;";
+	splash+="padding:"+localStorage.getItem("frase-padding")+"px;";
+	splash+="text-align:"+localStorage.getItem("frase-text-align")+";";
+	splash+="text-transform:"+localStorage.getItem("frase-text-transform")+";";
+	if(localStorage.getItem("frase-frame-preenchido")=="true"){
+		splash+="background-color:#"+ototom(bgcolor[0])+bgcolor[1]+ototom(bgcolor[2])+bgcolor[3]+ototom(bgcolor[4])+bgcolor[5]+";";
+		if(fontcolor=="true"&&localStorage.getItem("frase-sombra")=="true")
+			splash+=" box-shadow: 8px 8px 0px 0px  #"+(fontcolor=="true"?"222222":"dddddd")+";";
+	}
+	else if(localStorage.getItem("frase-tracado-borda")=="true")splash+="border:2px "+localStorage.getItem("frase-estilo-borda")+" #"+(fontcolor=="true"?"222222":"dddddd")+";";
+	if(localStorage.getItem("frase-inclinacao")=="true")splash+="transform:rotate("+localStorage.getItem("frase-angulo")+"deg);";
+
+	botoes="<div id=botoes>";
+	botoes+="<button style='position:fixed; bottom:69px; height:30px; right:128px; width:122px;' onclick=\"geraStilo(false,true,true,true);\">outro</button>";
+	botoes+="<button style='position:fixed; bottom:69px; height:30px; right:4px; width:122px;' onclick=\"inicio();\">editar</button>";
+
+	botoes+="<button style='position:fixed; bottom:36px; height:30px; right:4px; width:80px;' onclick=\"geraStilo(false,false,false,true);\">frame</button>";
+	botoes+="<button style='position:fixed; bottom:36px; height:30px; right:86px; width:82px;' onclick=\"geraStilo(false,false,true,false);\">text</button>";
+	botoes+="<button style='position:fixed; bottom:36px; height:30px; right:170px; width:80px;' onclick=\"geraStilo(false,true,false,false);\">cor</button>";
+
+	botoes+="<button style='position:fixed; bottom:3px; height:30px; right:4px; width:48px;' onclick=\"document.body.requestFullscreen();\">full</button>";
+	botoes+="<button style='position:fixed; bottom:3px; height:30px; right:54px; width:48px;' onclick=\"location='logo.htm';\">logo</button>";
+	botoes+="<button style='position:fixed; bottom:3px; height:30px; right:104px; width:46px;' onclick=\"location='estilofrase.zip';\">app</button>";
+	botoes+="<button style='position:fixed; bottom:3px; height:30px; right:152px; width:48px;' onclick=\"lng=false;geraStilo(true,false,false,false);\">en</button>";
+	botoes+="<button style='position:fixed; bottom:3px; height:30px; right:202px; width:48px;' onclick=\"lng=true;geraStilo(true,false,false,false);\">pt</button></div>";
+
+	document.body.innerHTML=splash+"\">"+localStorage.getItem("frase-frase").replace(/\</g,'&lt;').replace(/\n/g,'<br>').replace(/  /g,' &nbsp;')+"</div></div>"+botoes;
+}
+hexas="0123456789abcdef";
+hclara="5567899abcddefff";
+hescura="00012234566789aa";
+function ototom(c){for(x=0;x<16;x++)if(c==hexas[x])return fontcolor=="true"?hclara[x]:hescura[x];}
+document.body.onfullscreenchange=function(){
+	if(document.fullscreenElement)document.getElementById('botoes').style.display='none';
+	else document.getElementById('botoes').style.display='';
+}
+if(localStorage.getItem("frase-frase"))geraStilo(false,false,false,false);
+else{
+	localStorage.setItem("frase-userfrase","");
+	geraStilo(true,true,true,true);
+}
+</script>
+</html>

@@ -1,0 +1,72 @@
+@font-face {
+	font-family: "Architects Daughter";
+	src: url(fonts/architects.ttf);
+}
+
+@font-face {
+	font-family: "Montserrat";
+	src: url(fonts/montserrat.ttf);
+}
+
+@font-face {
+	font-family: "Poppins";
+	src: url(fonts/poppins.ttf);
+}
+
+@font-face {
+	font-family: "Roboto Mono";
+	src: url(fonts/roboto.ttf);
+}
+
+@font-face {
+	font-family: "Rubik";
+	src: url(fonts/rubik.ttf);
+}
+
+@font-face {
+	font-family: "Secular One";
+	src: url(fonts/secular.ttf);
+}
+
+a {
+	background-color: #b8b8b8;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 7px 14px;
+	color: #222222;
+	border: 1px solid #555555;
+	cursor: pointer;
+}
+
+body {
+	background-color: #e1e1e1;
+	margin: 0px;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#edicao {
+	background-color: #cccccc;
+	border: 1px solid #777777;
+	padding: 12px 10px 16px 10px;
+	border-radius: 4px;
+	text-align: right;
+}
+
+#nome {
+	width: 200px;
+	padding: 12px;
+	border: 1px solid #777777;
+	margin-bottom: 16px;
+	background-color: #ffffff;
+}
+
+#frase {
+	width: 270px;
+	height: 80px;
+	padding: 12px;
+	margin-bottom: 10px;
+	background-color: #ffffff;
+}
